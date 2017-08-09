@@ -15,20 +15,22 @@ class Board
     @grid = grid
   end
 
-  def self.setup
-    grid = Array.new(8) { Array.new(8) }
+  def self.setup  #make sure to initialize correctly like so !!
+    grid = Array.new(8) { Array.new(8) { NullPiece.instance } }
 
     (0..7).each do |y|
       (0..7).each do |x| #this should populate with two side and null in middle
-        if y.between?(0, 1) || y.between?(6, 7)
-          grid[y][x] = Piece.new
+        if y.between?(0, 1)
+          grid[y][x] = King.new(:white, :K, [y, x], self)
+        elsif y.between?(6, 7)
+          grid[y][x] = King.new(:black, :K, [y, x], self)
         end
       end
     end
     grid
   end
 
-  def move_piece(start, finish)
+  def move_piece(start, finish) #this is unfinished 
     raise NoPiece if start.nil?
     raise PlaceOccupied unless finish.nil?
 
@@ -45,7 +47,7 @@ class Board
 
   def []=(pos, val)
     y, x = pos
-    @grid[y][x] = val 
+    @grid[y][x] = val
   end
 
 end

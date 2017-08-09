@@ -22,13 +22,6 @@ end
 
 class Child < Parent
 
-  def initialize
-
-  end
-
-  def print_something(phrase)
-    super
-  end
 
 end
 

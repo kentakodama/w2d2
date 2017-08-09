@@ -1,9 +1,39 @@
 
-module SlidingPiece
 
+require 'singleton'
 
+class Piece
+
+  attr_accessor :color, :symbol, :position, :board
+
+  def initialize(color, symbol, position, board)
+    @color = color
+    @symbol = symbol
+    @position = position
+    @board = board
+  end
+
+  def to_s
+    @symbol.to_s
+  end
 
 end
+
+# module SlidingPiece
+#
+#   def moves(direction)
+#     if direction == :ortho
+#
+#     elsif direction == :diag
+#
+#
+#     else
+#
+#
+#   end
+#
+#
+# end
 
 
 module SteppingPiece
@@ -21,11 +51,11 @@ module SteppingPiece
     #out of bounds, occupied by own color
 
     possible = in_bounds.reject {|coor| @board[coor].color == @color}
-
   end
 
 
 end
+
 
 
 class King < Piece
@@ -75,29 +105,15 @@ end
 
 
 
-
-class Piece
-
-  attr_accessor :color, :symbol, :position, :board
-
-  def initialize(color, symbol, position, board)
-    @color = color
-    @symbol = symbol
-    @position = position
-    @board = board
-  end
-
-  def to_s
-    @symbol.to_s
-  end
-
-end
-
 class NullPiece < Piece
+
+  # attr_accessor wasn't inherited - needed to be added to access :color
+  attr_accessor :color
+
   include Singleton
 
-  def initialize(color, symbol)
-    @color = nil
+  def initialize
+    @color = :orange
     @symbol = nil
   end
 

@@ -15,26 +15,27 @@ class Display
   def render
     (0..7).each do |y|
       if y == @cursor.cursor_pos[0]
-        #print each element of the row individually
+
         (0..7).each do |x|
-          # colorize the shit outa this
-          if x == @cursor.cursor_pos[1]
-            print ' '.colorize( :background => :blue)
-          else
-            print 'v'#@board.grid[y][x]
+          if x == @cursor.cursor_pos[1]  #this line sets the cursor
+            print @board[[y, x]].to_s.colorize(:color => @board[[y, x]].color, :background => :blue)
+          else #this prints all other objects by calling the to_s method IN THE ROW with the cursor
+            print @board[[y, x]].to_s.colorize(:color => @board[[y, x]].color)
           end
         end
-        puts ''
+        puts '' #create a line break so rows are separate
       else
-        puts 'vvvvvvvv'# @board.grid[y]
+        (0..7).each do |x|
+          print @board[[y, x]].to_s.colorize(:color => @board[[y, x]].color)
+        end #this prints all pieces in non-cursor rows by calling the to_s method
+        puts ''
       end
     end
-    # puts ' ABCDEFGH'
   end
 
   def run
     while true
-      system 'clear'
+      system 'clear' # auto clears terminal 
       render
       @cursor.get_input #keeps checking for cursor arrow input
     end
